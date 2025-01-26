@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>boolean</title>
+    </head>
+    <body>
+     <button onclick="rock()">Rock</button>
+     <button onclick="paper()">Paper</button>
+     <button onclick="scissor()">Scissor</button>
+    </body>
+    <script>
+       
+       function getComputerChoice(){
+        const choice=['Rock', 'Paper', 'Scissor']
+        let computerChoose= Math.floor(Math.random() * 3)
+        return choice[computerChoose];
+       }
+   
+        function rock(){
+           let humanChoice='Rock';
+           let computerChoice=getComputerChoice();
+           gameRule(humanChoice,computerChoice);
+        }
+        function paper(){
+           let humanChoice='Paper';
+           let computerChoice=getComputerChoice();
+           gameRule(humanChoice,computerChoice);
+        }
+        function scissor(){
+           let humanChoice='Scissor';
+           let computerChoice=getComputerChoice();
+           gameRule(humanChoice,computerChoice);
+        }
+        function gameRule(humanChoice,computerChoice){
+            if(humanChoice === computerChoice){
+                alert('Tie');
+            }else if((humanChoice === 'Rock' && computerChoice === 'Scissor')||
+                     (humanChoice === 'Paper' && computerChoice === 'Rock') ||
+                     (humanChoice === 'Scissor' && computerChoice === 'Paper')) 
+                    {
+                        alert(`You win, you have selected ${humanChoice} and computer selected ${computerChoice}`);
+                    }
+            else{
+                alert(`You lose, you have selected ${humanChoice} and computer selected ${computerChoice}`);
+            }
+        }
+
+    </script>
+</html>
