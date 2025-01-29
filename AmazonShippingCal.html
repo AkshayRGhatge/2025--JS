@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+
+        <h2>Amazon Shipping Calculator</h2>
+        <p>Orders under $40 = + $10 shipping</p>
+        <p>Orders over $40 = Free shipping</p>
+        
+        <input type="text" id="costText">
+
+        <button title="Show quantity" onclick="calculate()">Calculate</button>
+        <p id="totalCost"></p>
+      
+       
+    </body>
+    <script>
+      function calculate(){
+        let cost = parseInt(document.querySelector('#costText').value);
+        console.log(cost)
+        if (isNaN(cost) || cost === undefined || cost === null) {
+            document.getElementById('totalCost').innerHTML = "Please enter a valid digit";
+        } else if (cost > 40) {
+            document.getElementById('totalCost').innerHTML = `Total: $${cost} (Free shipping)`;
+        } else {
+            document.getElementById('totalCost').innerHTML = `Total: $${cost + 10} (Shipping fee applied)`;
+        }
+
+      }
+    </script>
+</html>
