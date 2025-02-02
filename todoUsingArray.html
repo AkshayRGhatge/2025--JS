@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo List</title>
+    </head>
+    <style>
+            button{
+                padding:6px
+            }   
+            #addButton{
+                background-color: green;
+                border:none;
+                cursor: pointer;
+                color: white;
+            }
+            #deleteButton{
+                background-color: red;
+                border:none;
+                cursor: pointer;
+                color: white;
+            }
+           
+            .displayGrid, .todo-inout-grid{
+                display: grid;
+                grid-template-columns: 200px 100px 80px;
+                column-gap: 10px;
+                row-gap: 10px; 
+                align-items: center;
+            }
+            .todo-inout-grid
+            {
+                margin-bottom: 10px;
+                align-items: stretch;
+            }
+    </style>
+    <body>
+        <h3>Todo List</h3>
+        <div class="todo-inout-grid">
+           <input type="text" placeholder="Todo name" id="js-add-list">
+           <input type="date" id="js-date">
+           <button onclick="AddItems()" id="addButton">Add</button>
+        </div>
+      
+        <div id="displayItemList" class="displayGrid">  
+        </div>
+    </body>
+    <script>
+        //define an empty array
+        const toDoArray=[];
+
+        //fnction when 'Add' button is click
+        function AddItems()
+        {
+        
+            // get textbox id and store it 'checkValue'
+            const checkValue= document.querySelector('#js-add-list');
+
+            // get date field id and store it 'dateValue'
+            const dateValue=document.querySelector('#js-date');
+
+            if(checkValue.value !=null || checkValue.value != " " || dateValue !=" " || dateValue != null)
+            {
+                //store the value of the date field and name field
+                const name=checkValue.value;
+                const date=dateValue.value;
+
+                //Push it in the array as an object
+                toDoArray.push(
+                    {
+                        name:name,
+                        date:date
+                    }
+                );
+
+                /*  shorthand properties of object because both object name and valu are same
+                toDoArray.push(
+                    {
+                        name,
+                        date
+                    }
+                );*/
+
+                //clear the value of the date field and input text value
+                checkValue.value="";
+                dateValue.value="";
+
+                //Display function is called to show the value entered in the array display in the UI
+                displayItem();
+            }
+
+        }    
+
+        //Function to display the array item in the div
+        function displayItem()
+        {
+
+            let arrayELementsBlock='';
+
+            //loop through the array
+            for(let i=0;i<toDoArray.length;i++){
+
+                //get the array element and stored in the variable
+                const arrayElement=toDoArray[i];
+
+                //const name=arrayElement.name;  // destructure const {name, date}=arrayElement;
+                // const date=arrayELement.date;
+
+                //get the name and data object properties and store it in the variable
+                const {name,date}=arrayElement;
+            
+                //create an html element for display with the delete button
+                const htmlElement= `<div> ${name}</div>
+                                    <div> ${date}</div>
+                               
+                                        <button id="deleteButton"
+                                            onclick="toDoArray.splice(${i},1);displayItem();">Delete</button>
+                                   `;
+                //store the block in the arrayELementsBlock
+                arrayELementsBlock=arrayELementsBlock + htmlElement;
+                
+            }
+            //get the id where we need to display the array elements
+            var body=document.getElementById('displayItemList')
+            //append the block in the body
+            body.innerHTML=arrayELementsBlock;
+        }
+    </script>
+</html>
