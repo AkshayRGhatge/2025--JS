@@ -9,7 +9,7 @@ export const cart=[
     }
 ];
 
-export function addToCart(productId){
+export function addToCart(productId, quantity){
     let matchingItem;
         
     //loop through cart to check if the item exist in the cart or not
@@ -20,11 +20,12 @@ export function addToCart(productId){
             matchingItem=item;
          }
     });
+
     //If the item exists in the cart
     if(matchingItem)
     {
         //increment the quantity
-        matchingItem.quantity +=1;
+        matchingItem.quantity += quantity;
     }
     else 
     {
@@ -32,7 +33,7 @@ export function addToCart(productId){
         cart.push(
             {
                 productId: productId,
-                quantity:1
+                quantity:quantity
             }
         );
     }

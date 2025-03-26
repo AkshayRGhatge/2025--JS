@@ -29,7 +29,7 @@ products.forEach((product)=>{
                 </div>
 
                 <div class="product-quantity-container">
-                    <select>
+                    <select class="js-product-quantity-dropdown-${product.id}">
                     <option selected value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -67,8 +67,14 @@ products.forEach((product)=>{
                 //Get the productName through dataset here productId in the dom is from the data-product-Id.
                 const productId=button.dataset.productId;
 
-                //Add to cart
-                addToCart(productId);
+
+                 // Get the selected quantity from the dropdown
+
+                const dropdown = document.querySelector(`.js-product-quantity-dropdown-${productId}`);
+                const selectedQuantity = Number(dropdown.value); // Get the current value 
+                
+                // Add the product to the cart
+                addToCart(productId, selectedQuantity);
              
                 //update the cart quantity
                 updateCartQuantity();
