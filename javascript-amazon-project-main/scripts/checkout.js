@@ -17,7 +17,7 @@ cart.forEach(item => {
   if(matchingProduct)
   {
       checkoutHtml+=`
-          <div class="cart-item-container">
+          <div class="cart-item-container-${matchingProduct.id}">
               <div class="delivery-date">
                 Delivery date: Tuesday, June 21
               </div>
@@ -99,10 +99,13 @@ cart.forEach(item => {
    let appendCheckoutTag=document.querySelector('.order-summary');
    appendCheckoutTag.innerHTML=checkoutHtml;      
 
-   //Delete the cart item
+   //Delete the cart items.
+   //Add Event listener to all the Delete link
     const deleteQuantityLink=document.querySelectorAll('.js-delete-quantity');
 
-      deleteQuantityLink.forEach((deleteLink)=>{
+    //Loops through each link
+    deleteQuantityLink.forEach((deleteLink)=>{
+        //Add event listener click
         deleteLink.addEventListener('click', (deleteItem)=>{
         
           //Get the productName through dataset here productId in the dom is from the data-product-Id.
@@ -110,7 +113,8 @@ cart.forEach(item => {
           //Calling 'removeCartItem' to remove the item
           removeCartItem(deleteItemProductId)
         });
-
       })
       
+
+
 });
