@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart,removeCartItem} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrenccy} from './utils/money.js';
 
@@ -41,7 +41,7 @@ cart.forEach(item => {
                     <span class="update-quantity-link link-primary">
                       Update
                     </span>
-                    <span class="delete-quantity-link link-primary">
+                    <span class="delete-quantity-link link-primary js-delete-quantity"  data-product-id="${matchingProduct.id}">
                       Delete
                     </span>
                   </div>
@@ -54,7 +54,7 @@ cart.forEach(item => {
                   <div class="delivery-option">
                     <input type="radio" checked
                       class="delivery-option-input"
-                      name="delivery-option-1">
+                      name="delivery-option-${matchingProduct.id}">
                     <div>
                       <div class="delivery-option-date">
                         Tuesday, June 21
@@ -67,7 +67,7 @@ cart.forEach(item => {
                   <div class="delivery-option">
                     <input type="radio"
                       class="delivery-option-input"
-                      name="delivery-option-1">
+                      name="delivery-option-${matchingProduct.id}">
                     <div>
                       <div class="delivery-option-date">
                         Wednesday, June 15
@@ -80,7 +80,7 @@ cart.forEach(item => {
                   <div class="delivery-option">
                     <input type="radio"
                       class="delivery-option-input"
-                      name="delivery-option-1">
+                      name="delivery-option-${matchingProduct.id}">
                     <div>
                       <div class="delivery-option-date">
                         Monday, June 13
@@ -99,4 +99,18 @@ cart.forEach(item => {
    let appendCheckoutTag=document.querySelector('.order-summary');
    appendCheckoutTag.innerHTML=checkoutHtml;      
 
+   //Delete the cart item
+    const deleteQuantityLink=document.querySelectorAll('.js-delete-quantity');
+
+      deleteQuantityLink.forEach((deleteLink)=>{
+        deleteLink.addEventListener('click', (deleteItem)=>{
+        
+          //Get the productName through dataset here productId in the dom is from the data-product-Id.
+          const deleteItemProductId=deleteLink.dataset.productId;
+          //Calling 'removeCartItem' to remove the item
+          removeCartItem(deleteItemProductId)
+        });
+
+      })
+      
 });

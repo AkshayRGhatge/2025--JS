@@ -1,4 +1,4 @@
-export const cart=[
+export let cart=[
     {
         productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
         quantity:2
@@ -56,4 +56,17 @@ export function updateCartQuantity(){
         displayQuantity.innerHTML=totalQuantity;
     }
     
+}
+
+//The purpose of this function is to remove the item from the cart.
+export function removeCartItem(productID){
+    let cartDeleteItemID=productID;
+
+    let updateCart=cart.filter((cartItem)=>{
+        if(cartItem.productId != cartDeleteItemID)
+        {
+            return true;
+        }
+    })
+
 }
