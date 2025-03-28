@@ -46,7 +46,7 @@ products.forEach((product)=>{
 
                 <div class="product-spacer"></div>
 
-                <div class="added-to-cart">
+                <div class="added-to-cart js-added-to-cart-${product.id}">
                     <img src="images/icons/checkmark.png">
                     Added
                 </div>
@@ -70,14 +70,23 @@ products.forEach((product)=>{
 
 
                  // Get the selected quantity from the dropdown
-
                 const dropdown = document.querySelector(`.js-product-quantity-dropdown-${productId}`);
                 const selectedQuantity = Number(dropdown.value); // Get the current value 
-                
+
                 // Add the product to the cart
                 addToCart(productId, selectedQuantity);
              
                 //update the cart quantity
                 updateCartQuantity();
+
+               // Display Added message in the UI
+                const getMessageContainer = document.querySelector(`.js-added-to-cart-${productId}`);
+                getMessageContainer.classList.add('is-visible');
+
+                // Set a timeout to clear the success message after 2 seconds
+                const timeoutId = setTimeout(() => {
+                    getMessageContainer.classList.remove('is-visible');
+                }, 2000);
+             
             })
         })
