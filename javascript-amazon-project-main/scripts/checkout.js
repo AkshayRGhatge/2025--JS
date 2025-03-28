@@ -17,7 +17,7 @@ cart.forEach(item => {
   if(matchingProduct)
   {
       checkoutHtml+=`
-          <div class="cart-item-container-${matchingProduct.id}">
+          <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
               <div class="delivery-date">
                 Delivery date: Tuesday, June 21
               </div>
@@ -94,6 +94,7 @@ cart.forEach(item => {
               </div>
             </div>`;
   }
+});
 
    //get the product grid and append the product html into it
    let appendCheckoutTag=document.querySelector('.order-summary');
@@ -112,9 +113,12 @@ cart.forEach(item => {
           const deleteItemProductId=deleteLink.dataset.productId;
           //Calling 'removeCartItem' to remove the item
           removeCartItem(deleteItemProductId)
+
+            //remove the element from the dom
+            let getCartContainer=document.querySelector(`.js-cart-item-container-${deleteItemProductId}`);
+            getCartContainer.remove();
+
         });
       })
+
       
-
-
-});
