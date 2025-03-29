@@ -55,19 +55,23 @@ export function updateCartQuantity(){
     cart.forEach((item)=>{
         if(item.quantity != null)
         {
-            totalQuantity += item.quantity;
+             totalQuantity += item.quantity;
         }
     })
-    
-    //get the dom element for the cart quantity
-    const displayQuantity=document.querySelector('.js-cart-quantity');
-    if(totalQuantity)
-    {
-        displayQuantity.innerHTML=totalQuantity;
-    }
-    
+    return totalQuantity;
 }
 
+//Display the quantity in the UI
+export function displayCartQuantity(displayElementID)
+{
+      //get the cart quantity
+      let displayTotalQuantity=updateCartQuantity(); 
+
+      //get the dom element for the cart quantity
+      const displayQuantity=document.querySelector(displayElementID);
+      displayQuantity.innerHTML=displayTotalQuantity;
+     
+}
 //The purpose of this function is to remove the item from the cart.
 export function removeCartItem(productID){
     let cartDeleteItemID=productID;
@@ -81,5 +85,4 @@ export function removeCartItem(productID){
 
     cart=updateCart;
     saveCart();
-
 }

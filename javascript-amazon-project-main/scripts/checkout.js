@@ -1,4 +1,4 @@
-import {cart,removeCartItem} from '../data/cart.js';
+import {cart,removeCartItem,displayCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrenccy} from './utils/money.js';
 
@@ -96,6 +96,9 @@ cart.forEach(item => {
   }
 });
 
+  //Display the cart quantity
+  displayCartQuantity('.js-quantity-checkout');
+
    //get the product grid and append the product html into it
    let appendCheckoutTag=document.querySelector('.order-summary');
    appendCheckoutTag.innerHTML=checkoutHtml;      
@@ -106,18 +109,22 @@ cart.forEach(item => {
 
     //Loops through each link
     deleteQuantityLink.forEach((deleteLink)=>{
-        //Add event listener click
-        deleteLink.addEventListener('click', (deleteItem)=>{
+          //Add event listener click
+          deleteLink.addEventListener('click', (deleteItem)=>{
         
           //Get the productName through dataset here productId in the dom is from the data-product-Id.
           const deleteItemProductId=deleteLink.dataset.productId;
+          
           //Calling 'removeCartItem' to remove the item
-          removeCartItem(deleteItemProductId)
+           removeCartItem(deleteItemProductId);
 
-            //remove the element from the dom
-            let getCartContainer=document.querySelector(`.js-cart-item-container-${deleteItemProductId}`);
-            getCartContainer.remove();
+           //Display the cart quantity
+           displayCartQuantity('.js-quantity-checkout');
 
+          //remove the element from the dom
+          let getCartContainer=document.querySelector(`.js-cart-item-container-${deleteItemProductId}`);
+          getCartContainer.remove();
+ 
         });
       })
 

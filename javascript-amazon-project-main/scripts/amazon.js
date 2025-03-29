@@ -1,6 +1,7 @@
-import {cart,addToCart,updateCartQuantity} from '../data/cart.js';
+import {cart,addToCart,displayCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrenccy} from './utils/money.js';
+
 
 let productHtml='';
 
@@ -76,8 +77,8 @@ products.forEach((product)=>{
                 // Add the product to the cart
                 addToCart(productId, selectedQuantity);
              
-                //update the cart quantity
-                updateCartQuantity();
+                //Get the quantity and display in UI
+                displayCartQuantity('.js-cart-quantity');
 
                // Display Added message in the UI
                 const getMessageContainer = document.querySelector(`.js-added-to-cart-${productId}`);
