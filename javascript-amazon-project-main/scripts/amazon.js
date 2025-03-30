@@ -59,8 +59,10 @@ products.forEach((product)=>{
         });
         //get the product grid and append the product html into it
         let appendTag=document.querySelector('.products-grid');
-        appendTag.innerHTML=productHtml;      
+        appendTag.innerHTML=productHtml;  
 
+         //Get the quantity and display in UI
+         displayCartQuantity('.js-cart-quantity');
    
 
         document.querySelectorAll('.js-add-to-cart').forEach((button)=>{

@@ -86,3 +86,18 @@ export function removeCartItem(productID){
     cart=updateCart;
     saveCart();
 }
+//The purpose of this method is the update the product quantity
+export function cartItemUpdateQuantity(getProductID,quantityItem)
+{
+    //loop through the cart
+    cart.forEach((cartItem)=>{
+      //if the product id match
+        if(cartItem.productId==getProductID)
+        {
+            //assigned the quantity to the array item quantity and return
+            return cartItem.quantity=quantityItem;
+        }
+
+    });
+    saveCart();
+}

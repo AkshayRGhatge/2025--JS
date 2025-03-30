@@ -1,4 +1,4 @@
-import {cart,removeCartItem,displayCartQuantity} from '../data/cart.js';
+import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrenccy} from './utils/money.js';
 
@@ -140,32 +140,41 @@ cart.forEach(item => {
         //add click event
         updateQuantityLink.addEventListener('click',()=>{
         
-          const updateLink=updateQuantityLink.dataset.productId;
+          const updateLinkID=updateQuantityLink.dataset.productId;
+     
           //Once update is click need to hide the quantity label and update link so adding class 'display-none' using classlist
-         document.querySelector(`.js-quantity-label-${updateLink}`).classList.add('display-none');
+         const displayQuantityLabel= document.querySelector(`.js-quantity-label-${updateLinkID}`);
+         displayQuantityLabel.classList.add('display-none');
          updateQuantityLink.classList.add('display-none');
 
           //show the Save and text box by removing class 'display-none' using classList
-          document.querySelector(`.js-quantity-input-${updateLink}`).classList.remove('display-none');
-          document.querySelector(`.js-save-quantity-link-${updateLink}`).classList.remove('display-none');
+          document.querySelector(`.js-quantity-input-${updateLinkID}`).classList.remove('display-none');
+          document.querySelector(`.js-save-quantity-link-${updateLinkID}`).classList.remove('display-none');
          
           //When click on Save button save the number 
           //Hide the Save and quantity Text box
           //Show the update link
-          const saveQuantityLink=document.querySelector(`.js-save-quantity-link-${updateLink}`);
-         saveQuantityLink.addEventListener('click', ()=>{
+          const saveQuantityLink=document.querySelector(`.js-save-quantity-link-${updateLinkID}`);
+          saveQuantityLink.addEventListener('click', ()=>{
+
+            const getSelectedItemCartQuantity=document.querySelector(`.js-quantity-input-${updateLinkID}`).value;
 
             //Save the quantity
+            cartItemUpdateQuantity(updateLinkID,Number(getSelectedItemCartQuantity));
+
+           //Display the cart quantity
+           displayCartQuantity('.js-quantity-checkout');
+           displayQuantityLabel.innerHTML=Number(getSelectedItemCartQuantity);
 
             //Hide the quantity text box
-            document.querySelector(`.js-quantity-input-${updateLink}`).classList.add('display-none');
+            document.querySelector(`.js-quantity-input-${updateLinkID}`).classList.add('display-none');
          
             //Hide the Save lInk
-            document.querySelector(`.js-save-quantity-link-${updateLink}`).classList.add('display-none');
+            document.querySelector(`.js-save-quantity-link-${updateLinkID}`).classList.add('display-none');
 
             //show the quantity label
 
-            document.querySelector(`.js-quantity-label-${updateLink}`).classList.remove('display-none');
+            document.querySelector(`.js-quantity-label-${updateLinkID}`).classList.remove('display-none');
 
             //Show the Update link
             updateQuantityLink.classList.remove('display-none');
