@@ -36,9 +36,12 @@ cart.forEach(item => {
                   </div>
                   <div class="product-quantity">
                     <span>
-                      Quantity: <span class="quantity-label">${item.quantity}</span>
+                      Quantity:
+                      <span class="quantity-label js-quantity-label-${matchingProduct.id}">${item.quantity}</span>
+                      <input type="number" class="quantity-input js-quantity-input-${matchingProduct.id} display-none" value=${item.quantity}>
+                      <span class="save-quantity-link link-primary js-save-quantity-link-${matchingProduct.id} display-none">Save</span>
                     </span>
-                    <span class="update-quantity-link link-primary">
+                    <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${matchingProduct.id}">
                       Update
                     </span>
                     <span class="delete-quantity-link link-primary js-delete-quantity"  data-product-id="${matchingProduct.id}">
@@ -127,5 +130,48 @@ cart.forEach(item => {
  
         });
       })
+      
 
+      //Add Event listener to all the update link
+      const updateQuantityLink=document.querySelectorAll('.js-update-quantity-link');
+      
+      //loop through each link
+      updateQuantityLink.forEach((updateQuantityLink)=>{
+        //add click event
+        updateQuantityLink.addEventListener('click',()=>{
+        
+          const updateLink=updateQuantityLink.dataset.productId;
+          //Once update is click need to hide the quantity label and update link so adding class 'display-none' using classlist
+         document.querySelector(`.js-quantity-label-${updateLink}`).classList.add('display-none');
+         updateQuantityLink.classList.add('display-none');
+
+          //show the Save and text box by removing class 'display-none' using classList
+          document.querySelector(`.js-quantity-input-${updateLink}`).classList.remove('display-none');
+          document.querySelector(`.js-save-quantity-link-${updateLink}`).classList.remove('display-none');
+         
+          //When click on Save button save the number 
+          //Hide the Save and quantity Text box
+          //Show the update link
+          const saveQuantityLink=document.querySelector(`.js-save-quantity-link-${updateLink}`);
+         saveQuantityLink.addEventListener('click', ()=>{
+
+            //Save the quantity
+
+            //Hide the quantity text box
+            document.querySelector(`.js-quantity-input-${updateLink}`).classList.add('display-none');
+         
+            //Hide the Save lInk
+            document.querySelector(`.js-save-quantity-link-${updateLink}`).classList.add('display-none');
+
+            //show the quantity label
+
+            document.querySelector(`.js-quantity-label-${updateLink}`).classList.remove('display-none');
+
+            //Show the Update link
+            updateQuantityLink.classList.remove('display-none');
+          
+         })
+        
+        })
+      })
       
