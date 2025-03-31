@@ -1,6 +1,15 @@
+//Named export
 import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrenccy} from './utils/money.js';
+//Default Export external js without curly bracket
+//each file can have single export as default  file
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; 
+
+const today=dayjs();
+const deliveryDate=today.add(7,'day');
+
+//console.log(deliveryDate.format('dddd,MMMM D'));
 
 let checkoutHtml='';
 
