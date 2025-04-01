@@ -1,7 +1,7 @@
 //Named export
 import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
-import {formatCurrenccy} from './utils/money.js';
+import {formatCurrency} from './utils/money.js';
 import {deliveryOptions} from '../data/deliveryOption.js';
 
 //Default Export external js without curly bracket
@@ -38,7 +38,7 @@ cart.forEach(item => {
                     ${matchingProduct.name}
                   </div>
                   <div class="product-price">
-                   $${formatCurrenccy(matchingProduct.priceCents)}
+                   $${formatCurrency(matchingProduct.priceCents)}
          
                   </div>
                   <div class="product-quantity">
@@ -92,7 +92,7 @@ cart.forEach(item => {
       {
         displayPrice='FREE'
       }else{
-        displayPrice=`$${formatCurrenccy(deliveryOption.priceCents)} -`;
+        displayPrice=`$${formatCurrency(deliveryOption.priceCents)} -`;
       }
 
       //Get the radio button checked for the delivery option
