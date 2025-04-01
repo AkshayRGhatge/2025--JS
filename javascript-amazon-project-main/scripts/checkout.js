@@ -2,14 +2,12 @@
 import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrenccy} from './utils/money.js';
+import {deliveryOptions} from '../data/deliveryOption.js';
+
 //Default Export external js without curly bracket
 //each file can have single export as default  file
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; 
 
-const today=dayjs();
-const deliveryDate=today.add(7,'day');
-
-//console.log(deliveryDate.format('dddd,MMMM D'));
 
 let checkoutHtml='';
 
@@ -63,45 +61,7 @@ cart.forEach(item => {
                   <div class="delivery-options-title">
                     Choose a delivery option:
                   </div>
-                  <div class="delivery-option">
-                    <input type="radio" checked
-                      class="delivery-option-input"
-                      name="delivery-option-${matchingProduct.id}">
-                    <div>
-                      <div class="delivery-option-date">
-                        Tuesday, June 21
-                      </div>
-                      <div class="delivery-option-price">
-                        FREE Shipping
-                      </div>
-                    </div>
-                  </div>
-                  <div class="delivery-option">
-                    <input type="radio"
-                      class="delivery-option-input"
-                      name="delivery-option-${matchingProduct.id}">
-                    <div>
-                      <div class="delivery-option-date">
-                        Wednesday, June 15
-                      </div>
-                      <div class="delivery-option-price">
-                        $4.99 - Shipping
-                      </div>
-                    </div>
-                  </div>
-                  <div class="delivery-option">
-                    <input type="radio"
-                      class="delivery-option-input"
-                      name="delivery-option-${matchingProduct.id}">
-                    <div>
-                      <div class="delivery-option-date">
-                        Monday, June 13
-                      </div>
-                      <div class="delivery-option-price">
-                        $9.99 - Shipping
-                      </div>
-                    </div>
-                  </div>
+                  ${deliveryOptionHtml(matchingProduct,item)}
                 </div>
               </div>
             </div>`;
@@ -110,7 +70,53 @@ cart.forEach(item => {
 
   //Display the cart quantity
   displayCartQuantity('.js-quantity-checkout');
+  
+  //Function to generate the html for the delivery option 
+  function deliveryOptionHtml(matchingProduct, cart){
+    let html='';
 
+    deliveryOptions.forEach((deliveryOption)=>{
+      //Get today day
+      const today=dayjs();
+
+      //Add day in the today day
+      const deliveryDate=today.add(deliveryOption.deliveryDays,'day');
+
+      //format
+      const deliveryDateFormat=deliveryDate.format('dddd, MMMM D');
+
+      //get the price cents
+      const getPriceCents=deliveryOption.priceCents;
+      let displayPrice='';
+      if(getPriceCents === 0)
+      {
+        displayPrice='FREE'
+      }else{
+        displayPrice=`$${formatCurrenccy(deliveryOption.priceCents)} -`;
+      }
+
+      //Get the radio button checked for the delivery option
+      let isChecked=deliveryOption.id == cart.deliveryOptionsID ? 'checked' : '';
+
+      html += `
+      <div class="delivery-option">
+                    <input type="radio" ${isChecked}
+                      class="delivery-option-input"
+                      name="delivery-option-${matchingProduct.id}">
+                    <div>
+                      <div class="delivery-option-date">
+                        ${deliveryDateFormat}
+                      </div>
+                      <div class="delivery-option-price">
+                        ${displayPrice} Shipping
+                      </div>
+                    </div>
+                  </div>
+      `
+    });
+    return html;
+
+  }
    //get the product grid and append the product html into it
    let appendCheckoutTag=document.querySelector('.order-summary');
    appendCheckoutTag.innerHTML=checkoutHtml;      
