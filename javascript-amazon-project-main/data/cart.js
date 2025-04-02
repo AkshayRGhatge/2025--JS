@@ -104,3 +104,20 @@ export function cartItemUpdateQuantity(getProductID,quantityItem)
     });
     saveCart();
 }
+
+//The purpose of this function is update the deliveryOptionID in the cart array when the delivery option get changes
+export function updateDeliveryOptionID(productId,deliveryOptionsID){
+    let matchingItem;
+        
+    //loop through cart to check if the item exist in the cart or not
+    cart.forEach((item)=>{
+        //Check if the productId is already exist in the cart then we can update the quantity.
+         if(item.productId == productId)
+         {
+            matchingItem=item;
+         }
+    });
+    matchingItem.deliveryOptionsID=deliveryOptionsID;
+    saveCart();
+
+}
