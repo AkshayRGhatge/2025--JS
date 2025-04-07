@@ -2,6 +2,9 @@ import {displayCartQuantity} from '../../data/cart.js';
 import {products} from '../../data/products.js';
 import {cart} from '../../data/cart.js';
 import {deliveryOptions} from '../../data/deliveryOption.js';
+import {formatCurrency} from '../utils/money.js';
+
+
 
 export function renderPaymentSummary()
 {
@@ -16,27 +19,27 @@ export function renderPaymentSummary()
 
           <div class="payment-summary-row">
             <div>Items <span class="js-display-cart-item"></span>:</div>
-            <div class="payment-summary-money">$42.75</div>
+            <div class="payment-summary-money js-item-payment"></div>
           </div>
 
           <div class="payment-summary-row">
             <div>Shipping &amp; handling:</div>
-            <div class="payment-summary-money">$4.99</div>
+            <div class="payment-summary-money js-item-delivery-fees"></div>
           </div>
 
           <div class="payment-summary-row subtotal-row">
             <div>Total before tax:</div>
-            <div class="payment-summary-money">$47.74</div>
+            <div class="payment-summary-money js-total-before-tax"></div>
           </div>
 
           <div class="payment-summary-row">
             <div>Estimated tax (10%):</div>
-            <div class="payment-summary-money">$4.77</div>
+            <div class="payment-summary-money js-total-tax"></div>
           </div>
 
           <div class="payment-summary-row total-row">
             <div>Order total:</div>
-            <div class="payment-summary-money">$52.51</div>
+            <div class="payment-summary-money js-total-price"></div>
           </div>
 
           <button class="place-order-button button-primary js-order-button">
@@ -76,8 +79,7 @@ export function renderPaymentSummary()
             let productQuantity=item.quantity;
             let productPriceCents=Number(matchingCartProduct.priceCents);
 
-            console.log(productQuantity);
-            console.log(productPriceCents);
+            //check if the product quantity is 1 then assign the price else multiple 8 quantity
             if(productQuantity==1)
             {
                 totalItemPrice += matchingCartProduct.priceCents;
@@ -85,14 +87,11 @@ export function renderPaymentSummary()
             else
             {
                 totalItemPrice += productQuantity * productPriceCents;
-            }
-            
+            }   
             
          }
-         console.log(totalItemPrice);
-
+         
          //Now get the deliveryOption ID from the cart Array to loop through delivery Option to get the priceCents
-     
         const deliveryOptionID= item.deliveryOptionsID;
         let deliveryOption='';
          
@@ -105,8 +104,39 @@ export function renderPaymentSummary()
         }
         })
 
+        if(deliveryOption)
+        {
+            totalDeliveryOptionPrice += deliveryOption.priceCents 
+        }
 
     })
+
+    //Display the items price
+    let placeHolderItemMoney=document.querySelector(".js-item-payment");
+    placeHolderItemMoney.innerHTML='$'+ formatCurrency(totalItemPrice);
+
+    //Display the handling Fees
+    let placeHolderDeliveryFees=document.querySelector(".js-item-delivery-fees")
+    placeHolderDeliveryFees.innerHTML='$'+ formatCurrency(totalDeliveryOptionPrice);
+
+    //Get the total of the Item price + deliveryFees
+    let itemPriceWithDelivery=totalItemPrice+totalDeliveryOptionPrice
+
+    //Display the total money before tax
+    let displayTotalBeforeTax=document.querySelector(".js-total-before-tax");
+    displayTotalBeforeTax.innerHTML='$'+ formatCurrency(itemPriceWithDelivery);
+
+    //Display the tax
+    let calculateTax=taxCalculator(itemPriceWithDelivery);
+
+    let displayTotalTax=document.querySelector(".js-total-tax");
+    displayTotalTax.innerHTML='$'+ formatCurrency(calculateTax);
+
+    //Display Total which is item price including deliveryfees + tax
+    let totalPrice=itemPriceWithDelivery + calculateTax;
+
+    let displayTotalPrice=document.querySelector(".js-total-price");
+    displayTotalPrice.innerHTML='$'+ formatCurrency(totalPrice);
 
     //Function to calculate the tax
     function taxCalculator(priceCents)

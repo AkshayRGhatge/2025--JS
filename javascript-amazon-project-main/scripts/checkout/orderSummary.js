@@ -3,6 +3,7 @@ import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity,updateDel
 import {products} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import {deliveryOptions} from '../../data/deliveryOption.js';
+import {renderPaymentSummary} from './paymentSummary.js';
 
 //Default Export external js without curly bracket
 //each file can have single export as default  file
@@ -223,6 +224,7 @@ export function renderOrderSummary()
 
             //Show the Update link
             updateQuantityLink.classList.remove('display-none');
+            renderPaymentSummary();
         
         })
         
@@ -238,6 +240,7 @@ export function renderOrderSummary()
         //call the updateDeliveryOptionID to update the cart deliveryoption id
         updateDeliveryOptionID(productId,deliveryOptionId);
         renderOrderSummary();
+        renderPaymentSummary();
         });
     });    
  }
