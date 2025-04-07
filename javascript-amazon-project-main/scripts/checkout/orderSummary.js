@@ -93,7 +93,7 @@ export function renderOrderSummary()
                     ${deliveryOptionHtml(matchingProduct,item)}
                   </div>
                 </div>
-              </div>`;
+            </div>`;
       }
     });
 
@@ -155,8 +155,8 @@ export function renderOrderSummary()
     //Add Event listener to all the Delete link
       const deleteQuantityLink=document.querySelectorAll('.js-delete-quantity');
 
-      //Loops through each link
-      deleteQuantityLink.forEach((deleteLink)=>{
+     //Loops through each link
+    deleteQuantityLink.forEach((deleteLink)=>{
             //Add event listener click
             deleteLink.addEventListener('click', (deleteItem)=>{
           
@@ -173,73 +173,71 @@ export function renderOrderSummary()
             let getCartContainer=document.querySelector(`.js-cart-item-container-${deleteItemProductId}`);
             getCartContainer.remove();
   
-          });
-        })
-        
-
-        //Add Event listener to all the update link
-        const updateQuantityLink=document.querySelectorAll('.js-update-quantity-link');
-        
-        //loop through each link
-        updateQuantityLink.forEach((updateQuantityLink)=>{
-          //add click event
-          updateQuantityLink.addEventListener('click',()=>{
-          
-            const updateLinkID=updateQuantityLink.dataset.productId;
-      
-            //Once update is click need to hide the quantity label and update link so adding class 'display-none' using classlist
-          const displayQuantityLabel= document.querySelector(`.js-quantity-label-${updateLinkID}`);
-          displayQuantityLabel.classList.add('display-none');
-          updateQuantityLink.classList.add('display-none');
-
-            //show the Save and text box by removing class 'display-none' using classList
-            document.querySelector(`.js-quantity-input-${updateLinkID}`).classList.remove('display-none');
-            document.querySelector(`.js-save-quantity-link-${updateLinkID}`).classList.remove('display-none');
-          
-            //When click on Save button save the number 
-            //Hide the Save and quantity Text box
-            //Show the update link
-            const saveQuantityLink=document.querySelector(`.js-save-quantity-link-${updateLinkID}`);
-            saveQuantityLink.addEventListener('click', ()=>{
-
-              const getSelectedItemCartQuantity=document.querySelector(`.js-quantity-input-${updateLinkID}`).value;
-
-              //Save the quantity
-              cartItemUpdateQuantity(updateLinkID,Number(getSelectedItemCartQuantity));
-
-            //Display the cart quantity
-            displayCartQuantity('.js-quantity-checkout');
-            displayQuantityLabel.innerHTML=Number(getSelectedItemCartQuantity);
-
-              //Hide the quantity text box
-              document.querySelector(`.js-quantity-input-${updateLinkID}`).classList.add('display-none');
-          
-              //Hide the Save lInk
-              document.querySelector(`.js-save-quantity-link-${updateLinkID}`).classList.add('display-none');
-
-              //show the quantity label
-
-              document.querySelector(`.js-quantity-label-${updateLinkID}`).classList.remove('display-none');
-
-              //Show the Update link
-              updateQuantityLink.classList.remove('display-none');
-            
-          })
-          
-          })
-        })
-
-        //Add event listener 'click' to the radio button delivery option
-        document.querySelectorAll('.js-delivery-option-input').
-        forEach((element)=>{
-            element.addEventListener('click',()=>{
-              //get the data attributes product id and deliveryOption id.
-            const {productId,deliveryOptionId}=element.dataset;
-            //call the updateDeliveryOptionID to update the cart deliveryoption id
-            updateDeliveryOptionID(productId,deliveryOptionId);
-            renderOrderSummary();
-          });
         });
+    })
         
- }
 
+    //Add Event listener to all the update link
+    const updateQuantityLink=document.querySelectorAll('.js-update-quantity-link');
+        
+    //loop through each link
+    updateQuantityLink.forEach((updateQuantityLink)=>{
+        //add click event
+        updateQuantityLink.addEventListener('click',()=>{
+        
+        const updateLinkID=updateQuantityLink.dataset.productId;
+    
+        //Once update is click need to hide the quantity label and update link so adding class 'display-none' using classlist
+        const displayQuantityLabel= document.querySelector(`.js-quantity-label-${updateLinkID}`);
+        displayQuantityLabel.classList.add('display-none');
+        updateQuantityLink.classList.add('display-none');
+
+        //show the Save and text box by removing class 'display-none' using classList
+        document.querySelector(`.js-quantity-input-${updateLinkID}`).classList.remove('display-none');
+        document.querySelector(`.js-save-quantity-link-${updateLinkID}`).classList.remove('display-none');
+        
+        //When click on Save button save the number 
+        //Hide the Save and quantity Text box
+        //Show the update link
+        const saveQuantityLink=document.querySelector(`.js-save-quantity-link-${updateLinkID}`);
+        saveQuantityLink.addEventListener('click', ()=>{
+
+            const getSelectedItemCartQuantity=document.querySelector(`.js-quantity-input-${updateLinkID}`).value;
+
+            //Save the quantity
+            cartItemUpdateQuantity(updateLinkID,Number(getSelectedItemCartQuantity));
+
+        //Display the cart quantity
+        displayCartQuantity('.js-quantity-checkout');
+        displayQuantityLabel.innerHTML=Number(getSelectedItemCartQuantity);
+
+            //Hide the quantity text box
+            document.querySelector(`.js-quantity-input-${updateLinkID}`).classList.add('display-none');
+        
+            //Hide the Save lInk
+            document.querySelector(`.js-save-quantity-link-${updateLinkID}`).classList.add('display-none');
+
+            //show the quantity label
+
+            document.querySelector(`.js-quantity-label-${updateLinkID}`).classList.remove('display-none');
+
+            //Show the Update link
+            updateQuantityLink.classList.remove('display-none');
+        
+        })
+        
+        })
+    })
+
+    //Add event listener 'click' to the radio button delivery option
+    document.querySelectorAll('.js-delivery-option-input').
+    forEach((element)=>{
+        element.addEventListener('click',()=>{
+            //get the data attributes product id and deliveryOption id.
+        const {productId,deliveryOptionId}=element.dataset;
+        //call the updateDeliveryOptionID to update the cart deliveryoption id
+        updateDeliveryOptionID(productId,deliveryOptionId);
+        renderOrderSummary();
+        });
+    });    
+ }
