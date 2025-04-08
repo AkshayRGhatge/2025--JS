@@ -1,7 +1,7 @@
 import {displayCartQuantity} from '../../data/cart.js';
-import {products} from '../../data/products.js';
+import {getProduct} from '../../data/products.js';
 import {cart} from '../../data/cart.js';
-import {deliveryOptions} from '../../data/deliveryOption.js';
+import {deliveryOptions,getDeliveryOption} from '../../data/deliveryOption.js';
 import {formatCurrency} from '../utils/money.js';
 
 
@@ -62,16 +62,7 @@ export function renderPaymentSummary()
         const productId=item.productId;
 
         //Find the match product id in the product JS reason to get the item pricecents
-        let matchingCartProduct='';
-        
-            //loop through each product item
-            products.forEach(product => {
-              //hck if the cart item id matches with the product id
-              if (product.id === productId) {
-                //assign the product array of an objet the matchingCartProduct
-                matchingCartProduct=product;
-              }
-            });
+        let matchingCartProduct=getProduct(productId);
 
          //If match found 
          if(matchingCartProduct)   
@@ -79,31 +70,16 @@ export function renderPaymentSummary()
             let productQuantity=item.quantity;
             let productPriceCents=Number(matchingCartProduct.priceCents);
 
-            //check if the product quantity is 1 then assign the price else multiple 8 quantity
-            if(productQuantity==1)
-            {
-                totalItemPrice += matchingCartProduct.priceCents;
-            }
-            else
-            {
-                totalItemPrice += productQuantity * productPriceCents;
-            }   
+            //product quantity * price     
+            totalItemPrice += productQuantity * productPriceCents;
             
          }
          
          //Now get the deliveryOption ID from the cart Array to loop through delivery Option to get the priceCents
         const deliveryOptionID= item.deliveryOptionsID;
-        let deliveryOption='';
+        const deliveryOption=getDeliveryOption(deliveryOptionID);
          
-        //loop through the delivery option array
-        deliveryOptions.forEach((option)=>{
-        //check the delivery option id matches with the cart delivery id
-        if(option.id==deliveryOptionID)
-        {
-            deliveryOption=option;
-        }
-        })
-
+         
         if(deliveryOption)
         {
             totalDeliveryOptionPrice += deliveryOption.priceCents 

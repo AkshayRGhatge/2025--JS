@@ -1,3 +1,20 @@
+//The function purpose is to loop through products array and find the product and return
+export function getProduct(productId)
+{
+    //Find the match product id in the product JS
+    let matchingCartProduct='';
+          
+    //loop through each product item
+    products.forEach(product => {
+      //check if the cart item id matches with the product id
+      if (product.id === productId) {
+        //assign the product array of an object to the matchingCartProduct
+        matchingCartProduct=product;
+      }
+    });
+    return matchingCartProduct;
+}
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",

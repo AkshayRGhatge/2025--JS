@@ -1,3 +1,18 @@
+//The function purpose is to loop through deliveryoption array and find the delivery item and return
+export function getDeliveryOption(deliveryOptionID){
+    let deliveryOption;
+    //loop through the delivery option array
+    deliveryOptions.forEach((option)=>{
+        //check the delivery option id matches with the cart delivery id
+        if(option.id==deliveryOptionID)
+        {
+          deliveryOption=option;
+        }
+      })
+      //Make the first item as default
+      return deliveryOption|| deliveryOption[0];
+}
+
 export const deliveryOptions=[
 {
     id: '1',

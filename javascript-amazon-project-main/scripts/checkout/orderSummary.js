@@ -1,8 +1,8 @@
 //Named export
 import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity,updateDeliveryOptionID} from '../../data/cart.js';
-import {products} from '../../data/products.js';
+import {getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
-import {deliveryOptions} from '../../data/deliveryOption.js';
+import {deliveryOptions,getDeliveryOption} from '../../data/deliveryOption.js';
 import {renderPaymentSummary} from './paymentSummary.js';
 
 //Default Export external js without curly bracket
@@ -19,28 +19,12 @@ export function renderOrderSummary()
 
     //get the product ID 
   const productId=item.productId
-    let matchingProduct='';
-
-    //loop through each product item
-    products.forEach(product => {
-      //hck if the cart item id matches with the product id
-      if (product.id === productId) {
-        matchingProduct=product;
-      }
-    });
+  const matchingProduct=getProduct(productId)
 
     // get the delivery option id from the cart array 
     const deliveryOptionID= item.deliveryOptionsID;
-    let deliveryOption='';
+    const deliveryOption=getDeliveryOption(deliveryOptionID)
 
-    //loop through the delivery option array
-    deliveryOptions.forEach((option)=>{
-      //check the delivery option id matches with the cart delivery id
-      if(option.id==deliveryOptionID)
-      {
-        deliveryOption=option;
-      }
-    })
 
     //Get today day
     const today=dayjs();
@@ -173,6 +157,8 @@ export function renderOrderSummary()
             //remove the element from the dom
             let getCartContainer=document.querySelector(`.js-cart-item-container-${deleteItemProductId}`);
             getCartContainer.remove();
+            //update the payment summary
+            renderPaymentSummary();
   
         });
     })
