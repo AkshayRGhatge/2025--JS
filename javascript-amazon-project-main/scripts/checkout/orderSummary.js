@@ -2,12 +2,10 @@
 import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity,updateDeliveryOptionID} from '../../data/cart.js';
 import {getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
+import {isWeekend,todayDate,addDate} from '../utils/day.js';
 import {deliveryOptions,getDeliveryOption} from '../../data/deliveryOption.js';
 import {renderPaymentSummary} from './paymentSummary.js';
 
-//Default Export external js without curly bracket
-//each file can have single export as default  file
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'; 
 
 export function renderOrderSummary()
 {
@@ -27,10 +25,10 @@ export function renderOrderSummary()
 
 
     //Get today day
-    const today=dayjs();
+    const today=todayDate();
 
     //Add day in the today day
-    const deliveryDate=today.add(deliveryOption.deliveryDays,'day');
+    const deliveryDate=addDate(today,deliveryOption.deliveryDays);
 
     //format
     const deliveryDateFormat=deliveryDate.format('dddd, MMMM D');
@@ -91,10 +89,10 @@ export function renderOrderSummary()
 
       deliveryOptions.forEach((deliveryOption)=>{
         //Get today day
-        const today=dayjs();
+        const today=todayDate();
 
         //Add day in the today day
-        const deliveryDate=today.add(deliveryOption.deliveryDays,'day');
+        const deliveryDate=addDate(today,deliveryOption.deliveryDays);
 
         //format
         const deliveryDateFormat=deliveryDate.format('dddd, MMMM D');
@@ -189,14 +187,14 @@ export function renderOrderSummary()
         const saveQuantityLink=document.querySelector(`.js-save-quantity-link-${updateLinkID}`);
         saveQuantityLink.addEventListener('click', ()=>{
 
-            const getSelectedItemCartQuantity=document.querySelector(`.js-quantity-input-${updateLinkID}`).value;
+          const getSelectedItemCartQuantity=document.querySelector(`.js-quantity-input-${updateLinkID}`).value;
 
             //Save the quantity
             cartItemUpdateQuantity(updateLinkID,Number(getSelectedItemCartQuantity));
 
-        //Display the cart quantity
-        displayCartQuantity('.js-quantity-checkout');
-        displayQuantityLabel.innerHTML=Number(getSelectedItemCartQuantity);
+            //Display the cart quantity
+            displayCartQuantity('.js-quantity-checkout');
+            displayQuantityLabel.innerHTML=Number(getSelectedItemCartQuantity);
 
             //Hide the quantity text box
             document.querySelector(`.js-quantity-input-${updateLinkID}`).classList.add('display-none');
@@ -222,11 +220,11 @@ export function renderOrderSummary()
     forEach((element)=>{
         element.addEventListener('click',()=>{
             //get the data attributes product id and deliveryOption id.
-        const {productId,deliveryOptionId}=element.dataset;
-        //call the updateDeliveryOptionID to update the cart deliveryoption id
-        updateDeliveryOptionID(productId,deliveryOptionId);
-        renderOrderSummary();
-        renderPaymentSummary();
+            const {productId,deliveryOptionId}=element.dataset;
+            //call the updateDeliveryOptionID to update the cart deliveryoption id
+            updateDeliveryOptionID(productId,deliveryOptionId);
+            renderOrderSummary();
+            renderPaymentSummary();
         });
     });    
  }

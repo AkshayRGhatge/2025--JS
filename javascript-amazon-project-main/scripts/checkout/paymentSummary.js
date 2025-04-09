@@ -1,7 +1,7 @@
 import {displayCartQuantity} from '../../data/cart.js';
 import {getProduct} from '../../data/products.js';
 import {cart} from '../../data/cart.js';
-import {deliveryOptions,getDeliveryOption} from '../../data/deliveryOption.js';
+import {getDeliveryOption} from '../../data/deliveryOption.js';
 import {formatCurrency} from '../utils/money.js';
 
 

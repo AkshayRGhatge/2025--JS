@@ -10,7 +10,7 @@ export function getDeliveryOption(deliveryOptionID){
         }
       })
       //Make the first item as default
-      return deliveryOption|| deliveryOption[0];
+      return deliveryOption || deliveryOption[0];
 }
 
 export const deliveryOptions=[
