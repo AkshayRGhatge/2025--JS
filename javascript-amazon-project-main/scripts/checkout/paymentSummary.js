@@ -47,7 +47,7 @@ export function renderPaymentSummary()
           </button>
     `
     //Apend the html to the dom
-    let appendPaymentSummary=document.querySelector('.payment-summary')
+    let appendPaymentSummary=document.querySelector('.js-payment-summary')
     appendPaymentSummary.innerHTML=paymentSummaryHtml;
 
     //display the total item  in the cart beside Items

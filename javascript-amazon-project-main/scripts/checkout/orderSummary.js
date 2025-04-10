@@ -1,11 +1,11 @@
 //Named export
-import {cart,removeCartItem,displayCartQuantity,cartItemUpdateQuantity,updateDeliveryOptionID} from '../../data/cart.js';
+import {cart,removeCartItem,cartItemUpdateQuantity,updateDeliveryOptionID} from '../../data/cart.js';
 import {getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import {isWeekend,todayDate,addDate} from '../utils/day.js';
 import {deliveryOptions,getDeliveryOption} from '../../data/deliveryOption.js';
 import {renderPaymentSummary} from './paymentSummary.js';
-
+import {renderCheckoutHeader} from './checkoutHeader.js';
 
 export function renderOrderSummary()
 {
@@ -79,9 +79,6 @@ export function renderOrderSummary()
             </div>`;
       }
     });
-
-    //Display the cart quantity
-    displayCartQuantity('.js-quantity-checkout');
     
     //Function to generate the html for the delivery option 
     function deliveryOptionHtml(matchingProduct, cart){
@@ -131,12 +128,12 @@ export function renderOrderSummary()
       return html;
     }
     //get the product grid and append the product html into it
-    let appendCheckoutTag=document.querySelector('.order-summary');
+    let appendCheckoutTag=document.querySelector('.js-order-summary');
     appendCheckoutTag.innerHTML=checkoutHtml;      
 
     //Delete the cart items.
     //Add Event listener to all the Delete link
-      const deleteQuantityLink=document.querySelectorAll('.js-delete-quantity');
+    const deleteQuantityLink=document.querySelectorAll('.js-delete-quantity');
 
      //Loops through each link
     deleteQuantityLink.forEach((deleteLink)=>{
@@ -150,11 +147,11 @@ export function renderOrderSummary()
             removeCartItem(deleteItemProductId);
 
             //Display the cart quantity
-            displayCartQuantity('.js-quantity-checkout');
+            renderCheckoutHeader()
+              
+            //refresh the page
+            renderOrderSummary();
 
-            //remove the element from the dom
-            let getCartContainer=document.querySelector(`.js-cart-item-container-${deleteItemProductId}`);
-            getCartContainer.remove();
             //update the payment summary
             renderPaymentSummary();
   
@@ -193,7 +190,7 @@ export function renderOrderSummary()
             cartItemUpdateQuantity(updateLinkID,Number(getSelectedItemCartQuantity));
 
             //Display the cart quantity
-            displayCartQuantity('.js-quantity-checkout');
+            renderCheckoutHeader();
             displayQuantityLabel.innerHTML=Number(getSelectedItemCartQuantity);
 
             //Hide the quantity text box
