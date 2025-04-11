@@ -18,3 +18,17 @@ import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
   }
 
  
+export function calculateDeliveryDate(deliveryOption) {
+  let remainingDays = deliveryOption.deliveryDays;
+  let deliveryDate = todayDate();
+
+  while (remainingDays > 0) {
+    deliveryDate = deliveryDate.add(1, 'day');
+
+    if (!isWeekend(deliveryDate)) {
+      remainingDays--;
+      // This is a shortcut for:
+      // remainingDays = remainingDays - 1;
+    }
+  }
+}
