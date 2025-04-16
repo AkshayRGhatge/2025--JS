@@ -26,7 +26,7 @@ function saveCart(){
     localStorage.setItem('cartItems', JSON.stringify(cart));
 }
 
-export function addToCart(productId, quantity){
+export function addToCart(productId){
     let matchingItem;
         
     //loop through cart to check if the item exist in the cart or not
@@ -42,7 +42,7 @@ export function addToCart(productId, quantity){
     if(matchingItem)
     {
         //increment the quantity
-        matchingItem.quantity += quantity;
+        matchingItem.quantity += 1;
     }
     else 
     {
@@ -50,7 +50,7 @@ export function addToCart(productId, quantity){
         cart.push(
             {
                 productId: productId,
-                quantity:quantity,
+                quantity:1,
                 deliveryOptionsID:'1'
             }
         );

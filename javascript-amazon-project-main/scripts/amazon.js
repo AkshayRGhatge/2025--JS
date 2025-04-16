@@ -74,10 +74,10 @@ products.forEach((product)=>{
 
                  // Get the selected quantity from the dropdown
                 const dropdown = document.querySelector(`.js-product-quantity-dropdown-${productId}`);
-                const selectedQuantity = Number(dropdown.value); // Get the current value 
+               
 
                 // Add the product to the cart
-                addToCart(productId, selectedQuantity);
+                addToCart(productId);
              
                 //Get the quantity and display in UI
                 displayCartQuantity('.js-cart-quantity');
