@@ -2,16 +2,21 @@ import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import {loadFromStorage, cart } from "../../data/cart.js";
 
 describe('Test Suite: renderOrderSummary',() =>{
-    it('displays the cart',()=>{
+    const productId1='15b6fc6f-327a-4ec4-896f-486349e85a3d';
+    const productId2='e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
+    //hook run before the test, in short set up code
+    beforeEach(()=>{
+        //mock localstorage object setItem method
+        spyOn(localStorage, 'setItem');
 
-        document.querySelector('.js-test-container').innerHTML=
-        `
-        <div class="js-order-summary"></div> 
+        document.querySelector('.js-test-container').innerHTML=`
+        <div class="js-order-summary"></div>
+        <div class="js-checkout-header"></div>
+        <div class="js-payment-summary"></div>
         `;
 
-        const productId1='15b6fc6f-327a-4ec4-896f-486349e85a3d';
-        const productId2='e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
-         //mock localstorage object getItem method
+
+        //mock localstorage object getItem method
         spyOn(localStorage,'getItem').and.callFake(()=>{
             return JSON.stringify([
                 {
@@ -32,7 +37,9 @@ describe('Test Suite: renderOrderSummary',() =>{
         loadFromStorage();
 
         renderOrderSummary();
-        
+    });
+    it('displays the cart',()=>{
+
         //check in the dom if we have 2 cart items
         //Note:   document.querySelectorAll('.js-cart-item-container') return the array of an object need to use length
         expect(
@@ -54,39 +61,6 @@ describe('Test Suite: renderOrderSummary',() =>{
     })
 
     it('delete the item',()=>{
-
-         //mock localstorage object setItem method
-         spyOn(localStorage, 'setItem');
-
-        document.querySelector('.js-test-container').innerHTML=`
-        <div class="js-order-summary"></div>
-        <div class="js-checkout-header"></div>
-        <div class="js-payment-summary"></div>
-        `;
-
-        const productId1='15b6fc6f-327a-4ec4-896f-486349e85a3d';
-        const productId2='e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
-         //mock localstorage object getItem method
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([
-                {
-                    productId: productId1,
-                    quantity:1,
-                    deliveryOptionsID: '1'
-                },
-                {
-                    productId: productId2,
-                    quantity:2,
-                    deliveryOptionsID: '2'
-                }  
-            ]);
-        })
-
-        //This was needed because we have mock the localstorage but it was loaded already when we have imported it 
-        //We need to reload it again after mock
-        loadFromStorage();
-
-        renderOrderSummary();
 
         //delete the first item
         document.querySelector(`.js-delete-link-${productId1}`).click();
