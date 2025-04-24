@@ -1,9 +1,14 @@
-//OOP: Organize the code into an object
-// Group data and function together into an object
-const cart={
-     cartItems : undefined,
-     loadFromStorage(){  //shortcut for loadFromStorage: function(){
-        this.cartItems= JSON.parse(localStorage.getItem('cartItems-oop')); 
+//use PascalCase for things that generate objects
+//create the Cart object
+function Cart(localStorageKey){
+    //OOP: Organize the code into an object
+    //Group data and function together into an object
+    //Easy to create multiple object
+    //Ex Amazon and Amazon business do have 2 carts 
+    const cart={
+        cartItems : undefined,
+        loadFromStorage(){  //shortcut for loadFromStorage: function(){
+        this.cartItems= JSON.parse(localStorage.getItem(localStorageKey)); 
     
         if(!this.cartItems)
         {
@@ -22,19 +27,19 @@ const cart={
         }
     },
     saveCart(){
-        localStorage.setItem('cartItems-oop', JSON.stringify(this.cartItems));
+        localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
     },
- 
+
     addToCart(productId){
         let matchingItem;
             
         //loop through cart to check if the item exist in the cart or not
         this.cartItems.forEach((item)=>{
             //Check if the productId is already exist in the cart then we can update the quantity.
-             if(item.productId == productId)
-             {
+                if(item.productId == productId)
+                {
                 matchingItem=item;
-             }
+                }
         });
     
         //If the item exists in the cart
@@ -56,13 +61,13 @@ const cart={
         }
         this.saveCart();
     },
-   updateCartQuantity(){
+    updateCartQuantity(){
         //get the total quantity by looping through cart and add the quantity
         let totalQuantity=0;
         this.cartItems.forEach((item)=>{
             if(item.quantity != null)
             {
-                 totalQuantity += item.quantity;
+                    totalQuantity += item.quantity;
             }
         })
         return totalQuantity;
@@ -81,7 +86,7 @@ const cart={
     },
     
     //The purpose of this function is to remove the item from the cart.
-     removeCartItem(productID){
+        removeCartItem(productID){
         let cartDeleteItemID=productID;
 
         let updateCart=this.cartItems.filter((cartItem)=>{
@@ -127,7 +132,13 @@ const cart={
         this.saveCart();
 
     }
-};
+    };
+    return cart;
+}
 
 
+const cart=Cart('cart-oop');
+const businessCart=Cart('cart-business');
 cart.loadFromStorage();
+businessCart.loadFromStorage();
+
