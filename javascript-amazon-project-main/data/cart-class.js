@@ -1,18 +1,19 @@
+//Class able us to create private variable and method
 class Cart{
     cartItems;
-    localStorageKey;
+    #localStorageKey; //# indicate private which mean it is used inside the class only , without # indicate public
     
     //Constructor let us to put the set up code in the class
     //Method should name constructor
     //it should not return 
     constructor(localStorageKey){
-        this.localStorageKey=localStorageKey;
-        this.loadFromStorage();
+        this.#localStorageKey=localStorageKey;
+        this.#loadFromStorage();
     }
 
 
-    loadFromStorage(){  //shortcut for loadFromStorage: function(){
-        this.cartItems= JSON.parse(localStorage.getItem(this.localStorageKey)); 
+    #loadFromStorage(){  //shortcut for loadFromStorage: function(){
+        this.cartItems= JSON.parse(localStorage.getItem(this.#localStorageKey)); 
     
         if(!this.cartItems)
         {
@@ -32,7 +33,7 @@ class Cart{
     }
 
     saveCart(){
-        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
 
     addToCart(productId){
@@ -149,9 +150,12 @@ cart.loadFromStorage();
 businessCart.loadFromStorage();
 */
 
+
+
 const cart= new Cart('cart-oop');
 const businessCart= new Cart('cart-business');
 
+//cart.#localStorageKey='Test' ; // error: not able to access because of private
 console.log(cart);
 console.log(businessCart);
 
