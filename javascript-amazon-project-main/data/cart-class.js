@@ -1,6 +1,15 @@
 class Cart{
-    cartItems =undefined;
-    localStorageKey= undefined;
+    cartItems;
+    localStorageKey;
+    
+    //Constructor let us to put the set up code in the class
+    //Method should name constructor
+    //it should not return 
+    constructor(localStorageKey){
+        this.localStorageKey=localStorageKey;
+        this.loadFromStorage();
+    }
+
 
     loadFromStorage(){  //shortcut for loadFromStorage: function(){
         this.cartItems= JSON.parse(localStorage.getItem(this.localStorageKey)); 
@@ -130,8 +139,7 @@ class Cart{
 
     }
 }
-
-
+/*
 const cart= new Cart();
 const businessCart= new Cart();
 cart.localStorageKey='cart-oop';
@@ -139,6 +147,10 @@ businessCart.localStorageKey='cart-business'
 
 cart.loadFromStorage();
 businessCart.loadFromStorage();
+*/
+
+const cart= new Cart('cart-oop');
+const businessCart= new Cart('cart-business');
 
 console.log(cart);
 console.log(businessCart);
