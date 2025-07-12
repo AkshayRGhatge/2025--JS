@@ -40,6 +40,26 @@ class Product{
    getPrice(){
    return `$${formatCurrency(this.priceCents)}`;
   }
+
+  extraInfoHTML(){
+    return '';
+  }
+}
+
+//Clothing inherit Product reuse the code inherits all the method from the Product class
+// If constructor specified in the parent constructor by default inherit class call parent constructor
+class Clothing extends Product{
+
+  sizeChartLink;
+  constructor(productDetails){
+    super(productDetails); //Super is used to call 'Product' class constructor 
+    this.sizeChartLink=productDetails.sizeChartLink;
+  }
+
+  //Method Overriding parent class
+  extraInfoHTML(){
+    return `<a href="${this.sizeChartLink}" target="_blank">Size chart</a>`;
+  }
 }
 
 
@@ -703,6 +723,9 @@ export const products = [
     ]
   }
 ].map((productDetails)=>{
+  if(productDetails.type === "clothing"){
+  return new Clothing(productDetails);
+  }
   return new Product(productDetails);
 });
 
