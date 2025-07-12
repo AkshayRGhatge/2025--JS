@@ -49,9 +49,9 @@ class Product{
 //Clothing inherit Product reuse the code inherits all the method from the Product class
 // If constructor specified in the parent constructor by default inherit class call parent constructor
 class Clothing extends Product{
-
   sizeChartLink;
   constructor(productDetails){
+
     super(productDetails); //Super is used to call 'Product' class constructor 
     this.sizeChartLink=productDetails.sizeChartLink;
   }
@@ -62,6 +62,37 @@ class Clothing extends Product{
   }
 }
 
+/*
+const date=new Date();
+console.log(date);
+
+console.log(date.toLocaleTimeString());
+*/
+
+/*
+console.log(this);
+
+const object2 = {
+  a: 2,
+  b: this.a
+};
+*/
+
+/*
+function logThis() {
+  console.log(this);
+}
+logThis();
+logThis.call('hello');
+
+this
+const object3 = {
+  method: () => {
+    console.log(this);
+  }
+};
+object3.method();
+*/
 
 export const products = [
   {
@@ -728,5 +759,4 @@ export const products = [
   }
   return new Product(productDetails);
 });
-
 //.map return new array, basically loop through array and take a inner function parameter (array item)
