@@ -94,6 +94,33 @@ const object3 = {
 object3.method();
 */
 
+
+//XMLHTTPRequest Send a request, use callback and wait for the response.
+
+export let products=[];
+
+export function loadProducts(fun){ // here the fun is callback function which runs in the future once the response is recevied, setTimeout is another call back function 
+
+  const xhr=new XMLHttpRequest();
+
+  //Need to add event listener since http request xhr.send(); is a asynchronous code meaning will not wait till it execute
+  xhr.addEventListener('load',()=>{
+     products= JSON.parse(xhr.response).//converting the json back to js object/array
+     map((productDetails)=>{             //new class     
+            if(productDetails.type === "clothing"){
+            return new Clothing(productDetails);
+            }
+            return new Product(productDetails);
+          });
+
+          console.log('Load products');
+          fun();
+  })
+  xhr.open('GET','https://supersimplebackend.dev/products');
+  xhr.send();
+}
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -760,3 +787,4 @@ export const products = [
   return new Product(productDetails);
 });
 //.map return new array, basically loop through array and take a inner function parameter (array item)
+*/
