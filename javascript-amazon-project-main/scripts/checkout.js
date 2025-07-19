@@ -1,7 +1,7 @@
 import { renderCheckoutHeader } from './checkout/checkoutHeader.js';
 import {renderOrderSummary}  from './checkout/orderSummary.js'
 import {renderPaymentSummary}  from './checkout/paymentSummary.js'
-import { loadProducts } from '../data/products.js';
+import { loadProducts,loadProductsFetch } from '../data/products.js';
 import {loadCart} from '../data/cart.js';
 //import '../data/cart-class.js';
 //import '../data/backend-practice.js'
@@ -51,7 +51,7 @@ new Promise((resolve)=>{
     console.log(value);
     return new Promise((resolve)=>{
         loadCart(()=>{
-         resolve();
+          resolve());
         });
     })
   
@@ -70,17 +70,7 @@ new Promise((resolve)=>{
 //Promise.all let you run multiple asynchronous code
 //within array it takes promise
 Promise.all([
-    new Promise((resolve)=>{
-    // Call the loadProducts function and pass a callback function to it.
-    // loadProducts is an asynchronous function that loads product data from the backend.
-    // Once loadProducts is done, it will call the callback function we passed.
-    loadProducts(()=>{ 
-
-         // This code runs AFTER products are loaded.
-         // We're calling resolve() to say "the Promise is complete now."
-        resolve('value1');  // pass parameter to then 
-     });
-    }),
+   loadProductsFetch(),
 
   new Promise((resolve)=>{
         loadCart(()=>{

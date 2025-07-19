@@ -99,7 +99,34 @@ object3.method();
 
 export let products=[];
 
+//fetch uses a promise
+export function loadProductsFetch()
+{
+  return fetch('https://supersimplebackend.dev/products')//call fetch it will create promise
+   .then((response)=>{  // contain the response once the async operation done
+      return response.json();
+    })
+  .then((productData)=>{
+    
 
+      products =  productData
+      // Use map to transform each product into a Product or Clothing object
+      .map((productDetails) => {
+        if (productDetails.type === "clothing") {
+          return new Clothing(productDetails); // Create Clothing object if type is clothing
+        }
+        return new Product(productDetails);     // Otherwise, create a regular Product object
+      });
+       console.log('Load products from fetch');
+
+  });
+}
+
+/*
+loadProductsFetch().then(()=>{
+  console.log("next step")
+});
+*/
 // Exporting the loadProducts function so it can be imported and used in another file
 export function loadProducts(fun) { 
   // 'fun' is a callback function. This will be called AFTER the products are loaded.
