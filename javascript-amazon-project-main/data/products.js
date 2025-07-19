@@ -99,26 +99,43 @@ object3.method();
 
 export let products=[];
 
-export function loadProducts(fun){ // here the fun is callback function which runs in the future once the response is recevied, setTimeout is another call back function 
 
-  const xhr=new XMLHttpRequest();
+// Exporting the loadProducts function so it can be imported and used in another file
+export function loadProducts(fun) { 
+  // 'fun' is a callback function. This will be called AFTER the products are loaded.
 
-  //Need to add event listener since http request xhr.send(); is a asynchronous code meaning will not wait till it execute
-  xhr.addEventListener('load',()=>{
-     products= JSON.parse(xhr.response).//converting the json back to js object/array
-     map((productDetails)=>{             //new class     
-            if(productDetails.type === "clothing"){
-            return new Clothing(productDetails);
-            }
-            return new Product(productDetails);
-          });
+  // Create a new XMLHttpRequest object to make a GET request
+  const xhr = new XMLHttpRequest();
 
-          console.log('Load products');
-          fun();
-  })
-  xhr.open('GET','https://supersimplebackend.dev/products');
+  // Add an event listener for the 'load' event.
+  // This will run when the response from the backend is fully received.
+  xhr.addEventListener('load', () => {
+    
+    // Convert JSON response text to a JavaScript object/array
+    products = JSON.parse(xhr.response)
+    
+      // Use map to transform each product into a Product or Clothing object
+      .map((productDetails) => {
+        if (productDetails.type === "clothing") {
+          return new Clothing(productDetails); // Create Clothing object if type is clothing
+        }
+        return new Product(productDetails);     // Otherwise, create a regular Product object
+      });
+
+    console.log('Load products');
+
+    // Now that the products are loaded and processed,
+    // call the callback function 'fun' to continue the next steps.
+    fun();
+  });
+
+  // Set up the GET request to a backend API
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+
+  // end the HTTP request asynchronously
   xhr.send();
 }
+
 
 /*
 export const products = [

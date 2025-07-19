@@ -127,3 +127,31 @@ export function updateDeliveryOptionID(productId,deliveryOptionsID){
     saveCart();
 
 }
+
+
+// Exporting the loadProducts function so it can be imported and used in another file
+export function loadCart(fun) { 
+  // 'fun' is a callback function. This will be called AFTER the products are loaded.
+
+  // Create a new XMLHttpRequest object to make a GET request
+  const xhr = new XMLHttpRequest();
+
+  // Add an event listener for the 'load' event.
+  // This will run when the response from the backend is fully received.
+  xhr.addEventListener('load', () => {
+    
+
+     console.log(xhr.response);
+
+
+    // Now that the products are loaded and processed,
+    // call the callback function 'fun' to continue the next steps.
+    fun();
+  });
+
+  // Set up the GET request to a backend API
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+
+  // end the HTTP request asynchronously
+  xhr.send();
+}
