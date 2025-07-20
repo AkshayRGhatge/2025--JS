@@ -88,5 +88,15 @@
         </div>
       </div>
     </div>
+    <script>
+      //Url parameter https://abc.com?orderid=122 here orderid=122  is parameters
+      
+      //generate obj
+      const url=new URL(window.location.href);  //get the url
+      //url.searchParams.get('orderId');  //get the parameter from url 
+      console.log( url.searchParams.get('orderId'));
+      console.log( url.searchParams.get('productId'));
+
+    </script>
   </body>
 </html>
