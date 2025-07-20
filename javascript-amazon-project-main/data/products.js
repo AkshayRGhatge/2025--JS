@@ -107,8 +107,6 @@ export function loadProductsFetch()
       return response.json();
     })
   .then((productData)=>{
-    
-
       products =  productData
       // Use map to transform each product into a Product or Clothing object
       .map((productDetails) => {
@@ -119,7 +117,9 @@ export function loadProductsFetch()
       });
        console.log('Load products from fetch');
 
-  });
+  })/*.catch(()=>{
+    console.log('Unexpected error occurred. try again later')
+  })*/
 }
 
 /*
@@ -156,12 +156,19 @@ export function loadProducts(fun) {
     fun();
   });
 
+  //Handle any event related to error 
+  xhr.addEventListener('error',(error)=>{
+    console.log('Unexpected error. Please try again later');
+  })
+
+
   // Set up the GET request to a backend API
   xhr.open('GET', 'https://supersimplebackend.dev/products');
 
   // end the HTTP request asynchronously
   xhr.send();
 }
+
 
 
 /*

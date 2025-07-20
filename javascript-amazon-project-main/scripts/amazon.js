@@ -1,8 +1,11 @@
 import {addToCart,displayCartQuantity} from '../data/cart.js';
-import {products, loadProducts} from '../data/products.js';
+import {products, loadProducts,loadProductsFetch} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
- loadProducts(renderProductGrid);
+
+ loadProductsFetch().then(()=>{
+    renderProductGrid();
+ });
 
  //need to group html code into function and pass it to the loadProducts function
  //Reason since loadProducts is asynchronous will not wait for the response, need to pass the html function to it so it can load the data

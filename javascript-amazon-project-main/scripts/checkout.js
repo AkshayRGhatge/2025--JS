@@ -69,17 +69,24 @@ new Promise((resolve)=>{
 // Asynchronous function to load page data and render UI components
 async function loadPage() {
   
-  // Wait for the products to be fetched from the backend
-  // loadProductsFetch returns a Promise
-  await loadProductsFetch(); // Allows writing async code like synchronous code, improves readability
+    try{
+        // Wait for the products to be fetched from the backend
+        // loadProductsFetch returns a Promise
+        await loadProductsFetch(); // Allows writing async code like synchronous code, improves readability
 
-  // Wait for the cart data to be loaded using a callback-based function (wrapped in a Promise)
-  await new Promise((resolve) => {
-    // loadCart uses a callback, so we wrap it in a Promise to use 'await'
-    loadCart(() => {
-      resolve(); // Resolve the Promise when cart loading is complete
-    });
-  });
+        // Wait for the cart data to be loaded using a callback-based function (wrapped in a Promise).
+        //reject create an error in future
+        await new Promise((resolve,reject) => {
+            // loadCart uses a callback, so we wrap it in a Promise to use 'await'
+            loadCart(() => {
+                //reject('error');
+            resolve(); // Resolve the Promise when cart loading is complete
+            });
+        });
+    } catch(error)
+    {
+        console.log('Error occurred. please try again later')
+    }
 
   // Once both products and cart are loaded, render the UI sections
     renderCheckoutHeader();
