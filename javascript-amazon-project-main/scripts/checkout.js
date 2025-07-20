@@ -32,7 +32,6 @@ new Promise((resolve)=>{
 
 */
 
-
 /*
 new Promise((resolve)=>{
     // Call the loadProducts function and pass a callback function to it.
@@ -64,9 +63,32 @@ new Promise((resolve)=>{
     renderOrderSummary();
     renderPaymentSummary();
 })
-
-
 */
+
+//Async operation make a function return promise
+// Asynchronous function to load page data and render UI components
+async function loadPage() {
+  
+  // Wait for the products to be fetched from the backend
+  // loadProductsFetch returns a Promise
+  await loadProductsFetch(); // Allows writing async code like synchronous code, improves readability
+
+  // Wait for the cart data to be loaded using a callback-based function (wrapped in a Promise)
+  await new Promise((resolve) => {
+    // loadCart uses a callback, so we wrap it in a Promise to use 'await'
+    loadCart(() => {
+      resolve(); // Resolve the Promise when cart loading is complete
+    });
+  });
+
+  // Once both products and cart are loaded, render the UI sections
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
+}
+loadPage()
+
+/*
 //Promise.all let you run multiple asynchronous code
 //within array it takes promise
 Promise.all([
@@ -82,7 +104,7 @@ Promise.all([
         renderOrderSummary();
         renderPaymentSummary();
 })
-
+*/
 
 /*
 loadProducts(()=>{  
