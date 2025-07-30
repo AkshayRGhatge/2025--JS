@@ -5,14 +5,15 @@ export function getProduct(productId)
     //Find the match product id in the product JS
     let matchingCartProduct='';
           
-    //loop through each product item
-    products.forEach(product => {
-      //check if the cart item id matches with the product id
-      if (product.id === productId) {
-        //assign the product array of an object to the matchingCartProduct
-        matchingCartProduct=product;
-      }
-    });
+ //loop through each product item
+ for (const product of products) {
+     //check if the cart item id matches with the product id
+    if (product.id === productId) {
+      matchingCartProduct = product;
+      break; // stop looping once we find it
+    }
+  }
+    //If match found
     return matchingCartProduct;
 }
 
