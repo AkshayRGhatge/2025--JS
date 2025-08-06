@@ -1,5 +1,6 @@
 import {getProduct, loadProductsFetch} from '../data/products.js';
 import {getOrdersFromStorage} from '../data/orders.js';
+import { displayCartQuantity } from '../data/cart.js';  
 
 //Url parameter https://abc.com?orderid=122 here orderid=122  is parameters
       
@@ -58,7 +59,7 @@ loadProductsFetch().then(()=>{
             </div>
 
             <div class="product-info">
-            Quantity: 1
+            Quantity: ${matchingProduct.quantity}
             </div>
 
             <img class="product-image" src="${matchingProduct.image}">
@@ -87,6 +88,12 @@ loadProductsFetch().then(()=>{
     }
     let getSectionID=document.querySelector('.js-main-tracking');
     getSectionID.innerHTML=appendOrderTrackingSection;
+
+    //Display the cart quantity in the header
+   
+    displayCartQuantity('.js-tracking-cart-quantity');
+    
+   
 })
 
 
