@@ -24,7 +24,6 @@ export function moveOrdertoPastHistory(){
 
 //Function to render the order summary
 document.addEventListener('DOMContentLoaded', async() => {
-  displayCartQuantity('.js-order-cart-quantity');
 
     await loadProductsFetch(); // Wait for products to load
 
@@ -101,18 +100,20 @@ if(orderDetails && orderDetails.length > 0)
                             </div>
 
                             <div class="product-actions">
-                                <a href="tracking.html">
+                                <a href="tracking.html?orderId=${order.id}&productId=${getProductID}">
                                 <button class="track-package-button button-secondary">
                                     Track package
                                 </button>
                                 </a>
                             </div>
                         </div>
-                        </div>
+                  
                     `;
             }
 
         });  
+         // Close the order container after all products
+        orderGridSection += `</div>`;
     });
 }
 

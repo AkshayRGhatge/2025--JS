@@ -51,52 +51,9 @@
       </div>
     </div>
 
-    <div class="main">
-      <div class="order-tracking">
-        <a class="back-to-orders-link link-primary" href="orders.html">
-          View all orders
-        </a>
-
-        <div class="delivery-date">
-          Arriving on Monday, June 13
-        </div>
-
-        <div class="product-info">
-          Black and Gray Athletic Cotton Socks - 6 Pairs
-        </div>
-
-        <div class="product-info">
-          Quantity: 1
-        </div>
-
-        <img class="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg">
-
-        <div class="progress-labels-container">
-          <div class="progress-label">
-            Preparing
-          </div>
-          <div class="progress-label current-status">
-            Shipped
-          </div>
-          <div class="progress-label">
-            Delivered
-          </div>
-        </div>
-
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>
-      </div>
+    <div class="main js-main-tracking">
+   
     </div>
-    <script>
-      //Url parameter https://abc.com?orderid=122 here orderid=122  is parameters
-      
-      //generate obj
-      const url=new URL(window.location.href);  //get the url
-      //url.searchParams.get('orderId');  //get the parameter from url 
-      console.log( url.searchParams.get('orderId'));
-      console.log( url.searchParams.get('productId'));
-
-    </script>
   </body>
+  <script type="module"  src="scripts/tracking.js"></script>
 </html>
