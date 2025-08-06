@@ -1,6 +1,6 @@
 import {displayCartQuantity} from '../../data/cart.js';
 import {getProduct} from '../../data/products.js';
-import {cart} from '../../data/cart.js';
+import {cart,removeAllCartItems} from '../../data/cart.js';
 import {getDeliveryOption} from '../../data/deliveryOption.js';
 import {formatCurrency} from '../utils/money.js';
 import { addOrders } from '../../data/orders.js';
@@ -69,6 +69,8 @@ export function renderPaymentSummary()
 
           const order= await response.json();
           addOrders(order);
+          removeAllCartItems(); //Remove all the cart items after placing the order
+
           //console.log(order);
 
       } 

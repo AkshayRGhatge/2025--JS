@@ -128,6 +128,14 @@ export function updateDeliveryOptionID(productId,deliveryOptionsID){
 
 }
 
+//Remove all the cart items
+export function removeAllCartItems() {
+    //Clear the cart array
+    cart=[];
+    //Save the empty cart to local storage
+    saveCart();
+
+}
 
 // Exporting the loadProducts function so it can be imported and used in another file
 export function loadCart(fun) { 
