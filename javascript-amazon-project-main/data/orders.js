@@ -1,4 +1,4 @@
-import {displayCartQuantity} from '../data/cart.js';
+import {displayCartQuantity,addToCart} from '../data/cart.js';
 import { formatCurrency } from '../scripts/utils/money.js';
 import {getProduct,loadProductsFetch} from '../data/products.js';
 
@@ -93,9 +93,9 @@ if(orderDetails && orderDetails.length > 0)
                                 <div class="product-quantity js-order-product-quantity">
                                 Quantity: ${getQuantity}
                                 </div>
-                                <button class="buy-again-button button-primary">
+                                <button class="buy-again-button js-buy-it-again button-primary" data-product-id="${matchingProduct.id}">
                                 <img class="buy-again-icon" src="images/icons/buy-again.png">
-                                <span class="buy-again-message">Buy it again</span>
+                                <span class="buy-again-message ">Buy it again</span>
                                 </button>
                             </div>
 
@@ -120,6 +120,28 @@ if(orderDetails && orderDetails.length > 0)
 //Get the order grid section and render it in the order grid section
 let getOrderGridData=document.querySelector('.js-order-grid');
 getOrderGridData.innerHTML=orderGridSection;
+
+//Get the buy again buttons
+let buyAgainButtons=document.querySelectorAll('.js-buy-it-again');
+//Add event listener to each buy again button
+buyAgainButtons.forEach((button)=>{
+    button.addEventListener('click', ()=>{
+        //Get the product ID from the button
+        let productId=button.dataset.productId;
+    
+        //Get the product details from the local storage
+        let matchingProduct=getProduct(productId);
+        //If the product exists then add it to the cart
+        if(matchingProduct)
+        {
+            //Add the product to the cart
+            addToCart(matchingProduct.id, 1);
+            //Display the cart quantity in the header
+            displayCartQuantity('.js-order-cart-quantity');
+        }
+    });
+
+});
 
 });
 
