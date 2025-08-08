@@ -12,6 +12,17 @@ export function renderOrderSummary()
 
   let checkoutHtml='';
 
+  if(cart.length === 0)
+  {
+    checkoutHtml=`
+    <div>Your cart is empty.</div>
+    <a class="button-primary view-products-link" href="./amazon.html" data-testid="view-products-link">
+        View products
+      </a>`;
+   
+  }
+  else 
+  {
   //loop through each cart items array
   cart.forEach(item => {
 
@@ -79,6 +90,7 @@ export function renderOrderSummary()
             </div>`;
       }
     });
+  }
     
     //Function to generate the html for the delivery option 
     function deliveryOptionHtml(matchingProduct, cart){
